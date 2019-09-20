@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="card my-5 col-md-3">
+      <div class="card-body">
+        <form action="#">
+          <h6>Category:</h6>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="home" name="home" value="home" />
+              <label class="form-check-label" for="home">Home</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" />
+              <label class="form-check-label" for="tools">Tools and Equipment</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" /> 
+              <label class="form-check-label" for="sports">Sports and Recreations</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
+              <label class="form-check-label" for="entertainment">Entertainment</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" /> 
+              <label class="form-check-label" for="babies">Babies and Kids</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" />
+              <label class="form-check-label" for="fashion">Fashion</label>
+            </div><br>
+            
+          <h6>Location:</h6>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="5" name="radio" value="5" />
+            <label class="form-check-label" for "5">5km</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="10" name="radio" value="10" />
+            <label class="form-check-label" for="10">10km</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="20" name="radio" value="20" />
+            <label class="form-check-label" for="20">20km</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="50" name="radio" value="50" />
+            <label class="form-check-label" for="50">50km</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="100" name="radio" value="100" />
+            <label class="form-check-label" for="100">100km</label>
+          </div><br>
+
+          <div class="form-group">
+            <label for="deposit"><h6>Deposit Price:</h6></label>
+            <div class="d-flex justify-content-center">
+              <span class="mr-2">$0</span>
+              <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value="500" />
+              <span class="ml-2">$1000</span>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="rate"><h6>Rental Price Per Day:</h6></label>
+            <div class="d-flex justify-content-center">
+              <span class="mr-2">$0</span>
+              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" />
+              <span class="ml-2">$50</span>
+            </div>
+          </div><br>
+          <button class="btn btn-primary float-right" type="submit">Apply Filter</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="card my-5">
+        <div class="card-body">
+          <div id="localMap" style="width:100%;height:500px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="asset/js/localmap.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI1XWsjGukJ6Nm6nF87K7dn78rzKEuBfA&callback=localMap"></script>

@@ -1,0 +1,89 @@
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12 shadow-lg">
+            <!-- List Header -->
+            <div class="row">
+                <div class="lender-header" style="width:100%;background-color: rgb(255, 200, 20);">
+                    <div class="container" style="margin: 20px 50px 20px 50px;">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <i class="fas fa-store-alt fa-3x text-danger" style="margin: 5px;"></i>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div>
+                                    <h4>
+                                        <%= sess.username %>'s</h4>
+                                    <h5>Rental Shop</h5>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5" style="margin-top: 5px;">
+                                <p><a href="mailto:<%= sess.email %>">
+                                        <%= sess.email %></a><br />
+                                    <span class="text-uppercase">
+                                        <%= sess.postalcode %>,
+                                        <%= sess.prov %></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item List -->
+            <div class="row">
+                <div class="container" style="padding: 20px 50px;">
+                    <span class="float-left">
+                        <%= items.length %> products</span>
+                    <!-- <span class="float-right">Sort by:&nbsp;&nbsp;
+                        <select>
+                            <option value="price">Deposit Price</option>
+                            <option value="ppd">Price Per Day (Ascending)</option>
+                            <option value="ppd">Price Per Day (Descending)</option>
+                            <option value="new">Newly Listed</option>
+                            <option value="avail">Availability</option>
+                        </select>
+                    </span> -->
+                </div>
+
+                <!-- List Codes Starts Here -->
+                <div class="container lender-list">
+                    <% for (var i = 0; i < items.length; i++) { %>
+                    <% if (i%3 == 0) { %>
+                    <div class="row">
+                        <% } %>
+                        <div class="col-md-4">
+                            <a href="/item/<%= items[i].itemId %>" class="link">
+                                <div class="item-box">
+                                    <img src="<%= items[i].photoURL %>">
+                                    <h4 class="crop text-primary">
+                                        <%= items[i].name %>
+                                    </h4>
+                                    <p class="paracrop"><%= items[i].description %></p>
+                                    <p class="posteddate">Posted by: <%= moment(items[i].creationDate).format('MMMM DD, YYYY') %></p>
+                                    <div class="item-price">
+                                        <div class="item-price-content">
+                                            <span class="h1 text-danger font-weight-bold" id="price">$<%= items[i].rental_price_daily %></span> /
+                                            day
+                                            <div id="rating" class="text-center">
+                                                <span class="fa fa-star text-warning"></span>
+                                                <span class="fa fa-star text-warning"></span>
+                                                <span class="fa fa-star text-warning"></span>
+                                                <span class="fa fa-star text-warning"></span>
+                                                <span class="fa fa-star text-secondary"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% if (i%3 == 2) { %>
+                    </div>
+                    <hr />
+                    <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

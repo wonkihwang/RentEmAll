@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 card card-signin shadow-lg rounded mx-auto my-5">
+      <div class="card-body">
+        <h3 class="card-title text-center">Login</h3>
+        <form class="form-signin" method="POST" action="/login">
+          <div class="form-group">
+            <label for="username">USERNAME</label>
+            <input type="text" id="username" name="username" maxlength="20" class="form-control" required autofocus>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <input type="password" id="password" name="password" maxlength="20" class="form-control" required>
+          </div>
+          <!-- <div class="custom-control custom-checkbox mt-1 mb-3">
+            <input type="checkbox" class="custom-control-input" id="rememberPW" name="rememberPW">
+            <label class="custom-control-label" for="rememberPW">Remember password</label>
+          </div> -->
+          <br />
+          <div class="text-center">
+            <button class="btn btn-lg btn-primary text-uppercase px-5" type="submit">Submit</button>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="text-center">
+            <a href="/register">Register</a><br>
+            <a href="/forgot">Forgot Username or Password</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

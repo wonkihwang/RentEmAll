@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 card card-signin shadow-lg rounded mx-auto my-5">
+      <div class="card-body text-center">
+        <h3 class="card-title">Please verify your email first.</h3>
+        <br>
+        <p>This process will send a verification link to your email.</p>
+        <form id="verifyemail" action="/verifyemail" method="POST">
+          <input type="text" class="form-control" name="v_email" id="v_email" placeholder="Enter your valid email here">
+          <div class="errorMsg" id="invalid_email_errors"></div>
+          <input type="submit" class="btn btn-primary btn-block mt-4" value="SEND">
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#verifyemail').submit(function () {
+    clearErrors();
+    var email = $('#v_email').val();
+    if (!email) {
+      showErrors('invalid_email_errors', "Please enter an email address.");
+      return false;
+    } else if (!emailValidation(email)) {
+      showErrors('invalid_email_errors', "Invalid format email address.");
+      return false;
+    } else {
+      return true;
+    }
+  })
+  function emailValidation(email) {
+    var valid = true;
+    var regex = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;   /* regex format: abc123@email.com */
+    if (!regex.test(email)) {
+      valid = false;
+    }
+    return valid;
+  }
+</script>

@@ -1,0 +1,214 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="shadow-lg rounded">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <form id="form-payment" action="/cart/<%= item.itemId %>" method="POST">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="container">
+                                        <h5 class="card-title">Rental Information</h5><br>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <!-- first column -->
+                                                <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
+                                                    width="100%" height="200" style="object-fit: cover; border: 1px solid #ddd" />
+                                            </div> <!-- col-md-4 -->
+
+                                            <div class="col-md-7">
+                                                <!-- second column -->
+                                                <div class="form-group row">
+                                                    <!-- first row -->
+                                                    <h5>
+                                                        <%= item.name %>
+                                                    </h5>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <p>
+                                                        <%= item.description %>
+                                                    </p>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <h5>Lender:&nbsp;&nbsp;</h5>
+                                                    <h5>
+                                                        <%= lender.userName %>
+                                                    </h5>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <p>Available Rental Period:<br>From <span class="font-weight-bold text-success"
+                                                            id="itemFrom"></span>
+                                                        To <span class="font-weight-bold text-success" id="itemTo"></span>
+                                                    </p>
+                                                    <input type="hidden" id="itemStartDate" value="<%= item.itemStartDate %>">
+                                                    <input type="hidden" id="itemFinishDate" value="<%= item.itemFinishDate %>">
+                                                </div>
+                                            </div>
+                                        </div> <!-- col-sm-8 -->
+
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <!-- <label for="Quantity">Quantity</label><br />
+                                                <input id="Quantity" type="number" class="form-control" name="quantity"
+                                                    min="1" max="10" value="1" required> -->
+                                                    <label for="DatePurchased">Rental From (start date)</label><br />
+                                                    <input type="date" class="form-control" id="rentalStart" name="rentalStart"
+                                                        required>
+                                                    <input type="hidden" id="getRentalStart" value="<%= item.itemStartDate %>">
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="DatePurchased">Rental To (end date)</label><br />
+                                                    <input type="date" class="form-control" id="rentalEnd" name="rentalEnd"
+                                                        required readonly>
+                                                    <input type="hidden" id="getRentalEnd" value="<%= item.itemFinishDate %>">
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="vl"></div>
+                                    <div class="container">
+                                        <div>
+                                            <div class="inline float-right" style="margin: 0 auto;">
+                                                <p>$<span id="deposit">
+                                                        <%= item.deposit %></span><br /><br />
+                                                    $<span id="rentalprice">
+                                                        <%= item.rental_price_daily %></span><br />
+                                                    x <span id="rentaldays">0</span></p>
+                                            </div>
+                                            <div class="inline float-right" style="margin: 0 auto;">
+                                                <p>Deposit:<br /><br />
+                                                    Pay per day:<br />
+                                                    Rental period (days):&nbsp;&nbsp;&nbsp;</p>
+                                            </div>
+                                            <div id="hidden-inputs">
+                                                <input type="hidden" id="depositInput" name="deposit" value="">
+                                                <input type="hidden" id="rentalpriceInput" name="rentalprice" value="">
+                                                <input type="hidden" id="rentaldaysInput" name="rentaldays" value="">
+                                                <input type="hidden" id="totalInput" name="total" value="">
+                                            </div>
+                                            <br /><br /><br /><br />
+                                            <hr />
+                                            <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
+                                        </div>
+                                        <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
+                                            <button type="submit" class="btn btn-primary btn-cart text-uppercase" style="width:80%; margin-bottom:10px;"
+                                                disabled>Add to Shopping Cart</button>
+                                            <!-- <button type="submit" class="btn btn-primary btn-cart text-uppercase" style="width: 80%; margin-bottom: 10px;"
+                                                disabled>Payment</button> -->
+                                            <br />
+                                            <button type="button" class="btn btn-secondary text-uppercase" style="width: 80%;"
+                                                onclick="window.history.back();">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.btn-cart').attr('disabled', 'disabled');
+    calTotal();
+    // $('#qty').text($('#Quantity').val());
+
+    // $('#Quantity').change(function () {
+    //     var qty = $('#Quantity').val();
+    //     $('#qty').text(qty);
+    //     calTotal();
+    // });
+    var startdate = new Date($('#itemStartDate').val());
+    var finishdate = new Date($('#itemFinishDate').val());
+    var startdateString = startdate.getFullYear() + '-' + ("0" + (startdate.getMonth() + 1)).slice(-2) + '-' + ("0" + startdate.getDate()).slice(-2);
+    var finishdateString = finishdate.getFullYear() + '-' + ("0" + (finishdate.getMonth() + 1)).slice(-2) + '-' + ("0" + finishdate.getDate()).slice(-2);
+    $('#itemFrom').text(startdateString);
+    $('#itemTo').text(finishdateString);
+
+    var date = new Date();
+    var today = dateFormatter(date);
+
+    var getRentalStart = new Date($('#getRentalStart').val());
+    var getRentalEnd = new Date($('#getRentalEnd').val());
+    var getRentalStartString = getRentalStart.getFullYear() + '-' + ("0" + (getRentalStart.getMonth() + 1)).slice(-2) + '-' + ("0" + getRentalStart.getDate()).slice(-2);
+    var getRentalEndString = getRentalEnd.getFullYear() + '-' + ("0" + (getRentalEnd.getMonth() + 1)).slice(-2) + '-' + ("0" + getRentalEnd.getDate()).slice(-2);
+
+    // limit rental period selection between item's rental start and end date
+    if (today < getRentalStartString) {
+        $('#rentalStart').attr('min', getRentalStartString);
+        $('#rentalStart').attr('max', getRentalEndString);
+    }
+    else {
+        if (today < getRentalEndString) {
+            $('#rentalStart').attr('min', today);
+            $('#rentalStart').attr('max', getRentalEndString);
+        } else {
+            $('#rentalStart').attr('disabled', 'disabled');
+        }
+    }
+    $('#rentalEnd').attr('max', getRentalEndString);
+
+    $('#rentalStart').change(function () {
+        var startdate = $('#rentalStart').val();
+        $('#rentalEnd').val('');
+        $('#rentalEnd').removeAttr('readonly');
+        $('#rentalEnd').attr('min', startdate);
+        $('.btn-cart').attr('disabled', 'disabled');
+    })
+
+    $('#rentalEnd').change(function () {
+        $('.btn-cart').attr('disabled', 'disabled');
+        $('#rentaldays').text(GetDays());
+        calTotal();
+        console.log(document.getElementById('rentaldays').innerHTML);
+        if (document.getElementById('rentaldays').innerHTML > 0)
+            $('.btn-cart').attr('disabled', false);
+    })
+
+    console.log($('#depositInput').val());
+    console.log($('#rentalpriceInput').val());
+    console.log($('#rentaldaysInput').val());
+
+    function calTotal() {
+        var deposit = parseInt(document.getElementById('deposit').innerHTML);
+        var rentalprice = parseInt(document.getElementById('rentalprice').innerHTML);
+        var rentaldays = parseInt(document.getElementById('rentaldays').innerHTML);
+
+        var total = deposit + (rentalprice * rentaldays);
+
+        $('#depositInput').val(deposit);
+        $('#rentalpriceInput').val(rentalprice);
+        $('#rentaldaysInput').val(rentaldays);
+        $('#totalInput').val(total);
+
+        $('#totalprice').text(total);
+    }
+
+    function dateFormatter(date) {
+        var dd = date.getDate();
+        var mm = date.getMonth() + 1;
+        var yyyy = date.getFullYear();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        date = yyyy + '-' + mm + '-' + dd;
+        return date;
+    }
+
+    function GetDays() {
+        var start = new Date($('#rentalStart').val());
+        var end = new Date($('#rentalEnd').val());
+        return parseInt((end - start) / (24 * 3600 * 1000));
+    }
+</script>

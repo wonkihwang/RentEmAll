@@ -1,0 +1,371 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="shadow-lg rounded">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;">
+                                        <%= item.name %>
+                                        <% if (item.availability == 0) { %>
+                                        <span class="text-danger"> (Unavailable)</span>
+                                        <% } %>
+                                    </h4><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form>
+                                        <div class="container">
+                                            <div class="form-group row">
+                                                <div class="col-md-5">
+                                                    <!-- first column -->
+                                                    <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
+                                                        width="95%" height="300" style="object-fit:contain;border:1px solid #ddd" />
+                                                    <br>
+                                                    <span>Posted:
+                                                        <%= itemPostedDate %></span>
+                                                </div> <!-- col-md-5 -->
+
+                                                <div class="col-md-7">
+                                                    <!-- second column -->
+                                                    <div class="form-group row">
+                                                        <!-- first row -->
+                                                        <h5>Lender:&nbsp;&nbsp;</h5>
+                                                        <h5>
+                                                            <a href="/lenderpage/<%= user.userName %>">
+                                                                <%= user.userName %></a>
+                                                        </h5>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                                        <span class="star-prototype">
+                                                            <%= averageRate %></span>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <!-- second row -->
+                                                        <p>
+                                                            <%= item.description %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <p>Purchased Year:
+                                                            <%= item.purchasedYear %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <p>Available Rental Period: From <span class="font-weight-bold text-success"
+                                                                id="itemFrom"></span>
+                                                            To <span class="font-weight-bold text-success" id="itemTo"></span>
+                                                        </p>
+                                                        <input type="hidden" id="itemStartDate" value="<%= item.itemStartDate %>">
+                                                        <input type="hidden" id="itemFinishDate" value="<%= item.itemFinishDate %>">
+                                                    </div>
+                                                    <% if (item.availability == 0) { %>
+                                                    <div class="form-group row">
+                                                        <span class="text-danger font-weight-bold">This item is
+                                                            currently being rented.</span>
+                                                    </div>
+                                                    <% } %>
+
+                                                    <div class="row float-right">
+                                                        <!-- third row -->
+                                                        <span>Deposit Price:</span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                                        <h3>$
+                                                            <%= item.deposit %>
+                                                        </h3>
+                                                    </div> <!-- row -->
+                                                    <br>
+                                                    <br>
+
+                                                    <div class="row float-right">
+                                                        <!-- fourth row -->
+                                                        <span>Rental Price:</span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                                        <h3>$
+                                                            <%= item.rental_price_daily %>
+                                                        </h3>
+                                                    </div> <!-- row -->
+                                                    <br>
+                                                </div>
+                                            </div> <!-- col-sm-8 -->
+                                        </div>
+                                        <br />
+                                        <div class="float-left">
+                                            <% if (sess.username) { %>
+                                            <a href="/chat/<%= item.userId %>">
+                                                <button type="button" class="btn btn-warning">&emsp;&emsp;eCommunication&emsp;&emsp;</button>
+                                            </a>
+                                            <% } %>
+                                        </div>
+                                        <div class="float-right">
+                                            <% if (sess.username) { %>
+                                            <% if (sess.username == user.userName) { %>
+                                            <% if (item.availability != 0) { %>
+                                            <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
+                                                    type="button" value="&emsp;&emsp;Edit&emsp;&emsp;"></a>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal"
+                                                data-target="#deleteModal">&emsp;&emsp;Delete&emsp;&emsp;</button>
+                                            <% } else { %>
+                                            <input class="btn btn-secondary text-uppercase" type="button" value="Unavailable"
+                                                disabled>
+                                            <% } %>
+                                            <% } else { %>
+                                            <% if (item.availability != 0) { %>
+                                            <a href="/rent/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
+                                                    type="button" value="&emsp;&emsp;Rent&emsp;&emsp;"></a>
+                                            <% } else { %>
+                                            <input class="btn btn-secondary text-uppercase" type="button" value="Unavailable"
+                                                disabled>
+                                            <% } %>
+                                            <% } %>
+                                            <% } %>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Modal -->
+                        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Delete Item</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form name="deleteform" method="POST" action="/deleteItem">
+                                        <input type="hidden" id="userId" name="userId" value="<%= item.userId %>">
+                                        <input type="hidden" id="itemId" name="itemId" value="<%= item.itemId %>">
+                                        <div class="modal-body">
+                                            <p>Do you really want to delete this item "
+                                                <%= item.name %>"?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Review Page-->
+                        <hr class="my-5">
+                        <div class="container">
+                            <!-- Display reviews -->
+                            <h4 class="font-weight-bold">Renter Reviews</h4>
+                            <div class="d-inline" id="avgRating">
+                                <span class="star-prototype">
+                                    <%= averageRate %></span>
+                                <span class="ml-2 text-info" id="noOfReviews">(
+                                    <%= review.length %> )</span>
+                                <span class="d-block text-info mt-2" id="noOfStars">
+                                    <%= averageRate %> out of 5 stars</span>
+                            </div>
+                            <h4 class="text-right text-info">
+                                <%= item.name %>
+                            </h4>
+                            <h5 class="text-right">Lender:
+                                <%= user.userName %>
+                            </h5>
+
+                            <% for (var i = 0; i < review.length; i++) { %>
+                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%; background: #FEF9E1;"
+                                id="reviews">
+                                <span class="star-prototype">
+                                    <%= review[i].rating %></span>
+                                <span class="font-weight-bold ml-3" id="reviewTitle">
+                                    <%= review[i].reviewTitle %></span><br>
+                                <span id="username">By
+                                    <%= review[i].userName %></span><span class="ml-2" id="postedDate">on
+                                    <%= reviewPostedDate[i] %></span>
+                                <br><br>
+                                <p id="reviewContent">
+                                    <%= review[i].reviewText %>
+                                </p>
+                                <% if (sess.username && review[i].userName == sess.username) { %>
+                                <div class="offset-10">
+                                    <button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#edit-<%= review[i].reviewId %>">EDIT</button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteReview">DELETE</button>
+                                    <input type="hidden" id="currentReviewId" value="<%= review[i].reviewId %>">
+                                </div>
+
+                                <!-- Edit Review -->
+                                <div class="collapse" id="edit-<%= review[i].reviewId %>">
+                                    <form action="/editReview/<%= review[i].reviewId %>" method="POST" onsubmit="return reviewValidation();">
+                                        <input type="hidden" id="editReviewItemId" name="editReviewItemId" value="<%= item.itemId %>">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2>Edit Review</h2>
+                                                <div class='rating-stars'>
+                                                    <ul id='stars' name="stars">
+                                                        <li class='star' data-value='1'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='2'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='3'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='4'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='5'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                    </ul>
+                                                    <input id="ratingVal" name="ratingVal" type="hidden">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Title" id="title"
+                                                            name="editTitle" value="<%= review[i].reviewTitle %>" />
+                                                        <div class="errorMsg" id="titleError"></div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea class="form-control" rows="8" placeholder="Leave a Review"
+                                                            id="review" name="editReviewContent"><%= review[i].reviewText %></textarea>
+                                                        <div class="errorMsg" id="reviewTextError"></div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2 offset-10">
+                                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Confirm Deleting Review -->
+                                <div class="modal" id="deleteReview" tabindex="-1" role="dialog" aria-labelledby="deleteReviewLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Review</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form name="deleteReviewForm" method="POST" action="/deleteReview/<%= review[i].reviewId %>">
+                                                <!--<input type="hidden" id="reviewId" name="reviewId">-->
+                                                <input type="hidden" id="reviewItemId" name="reviewItemId" value="<%= item.itemId %>">
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete this review?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="deleteReviewBtn" type="submit" class="btn btn-primary btn-sm">Delete</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                            <% } %>
+
+                            <!-- Leave a review if logged in -->
+                            <% if (sess.username && sess.username != user.userName) { %>
+                            <hr class="my-5">
+                            <form action="/item/<%= item.itemId %>" method="POST" onsubmit="return reviewValidation();">
+                                <div class="row">
+                                    <div class="col-md-10 offset-1">
+                                        <h2>Rate
+                                            <%= item.name %>
+                                        </h2>
+                                        <div class='rating-stars'>
+                                            <ul id='stars' name="stars">
+                                                <li class='star' data-value='1'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='2'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='3'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='4'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='5'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                            </ul>
+                                            <input id="ratingVal" name="ratingVal" type="hidden">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control" placeholder="Title" id="title"
+                                                    name="title" />
+                                                <div class="errorMsg" id="titleError"></div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <textarea class="form-control" rows="8" placeholder="Leave a Review" id="review"
+                                                    name="review"></textarea>
+                                                <div class="errorMsg" id="reviewTextError"></div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2 offset-10">
+                                                <button type="submit" class="btn btn-primary form-control">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% if (message.length > 0) { %>
+<div class="modal" id="reviewExistErrorModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Cannot post more than one review per item.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<script>
+    var startdate = new Date($('#itemStartDate').val());
+    var finishdate = new Date($('#itemFinishDate').val());
+    var startdateString = startdate.getFullYear() + '-' + ("0" + (startdate.getMonth() + 1)).slice(-2) + '-' + ("0" + startdate.getDate()).slice(-2);
+    var finishdateString = finishdate.getFullYear() + '-' + ("0" + (finishdate.getMonth() + 1)).slice(-2) + '-' + ("0" + finishdate.getDate()).slice(-2);
+    $('#itemFrom').text(startdateString);
+    $('#itemTo').text(finishdateString);
+</script>

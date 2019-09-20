@@ -1,0 +1,384 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #eee;
+}
+
+#header {
+    width: 100%;
+    background-color: #eee;
+    padding: 5px 30px 5px 30px;
+}
+#header-inline {
+    margin: 0 auto;
+    font-size: 12px;
+    color: #3e3e3e;
+}
+#header-inline li:hover {
+    color: #b5b5b5;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#searchbar {
+    /* width: 32vw; */
+}
+#navbar-logo {
+    height: auto;
+    width: 150px;
+    display: block;
+    margin-left: 5px;
+    margin-top: 10px;
+    position: absolute;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .5));
+    cursor: pointer;
+    z-index: 99;
+}
+#navbarSupportedContent {
+    margin-left: 180px;
+}
+#searchbar-row {
+    margin-left: 160px;
+}
+#features {
+    margin-left: 30px;
+}
+#features button {
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, .3));
+}
+.user {
+    text-align: center;
+}
+.user button {
+    background-color: transparent;
+}
+.user i {
+    margin: auto;
+    padding: 5px;
+    color: #225079;
+}
+.user #user-id {
+    font-size: 10px;
+    color: #8e8e8e;
+    margin: 0 5px 5px 5px;
+}
+.navbar {
+    border-radius: 0;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .5);
+}
+.navbar-nav>li {
+	margin: 0 20px 0 20px;
+}
+#carousel-slider {
+    margin-bottom: 50px;
+    z-index: 0;
+}
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+}
+.dropbtn {
+    background-color: transparent;
+    color: #fff;
+    padding: 8px 18px 8px 18px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #225079;
+    padding: 12px 16px 18px 16px;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content-r {
+    right: 0;
+}
+.dropdown-content a {
+    color: #fff;
+    padding: 8px 0 14px;
+    margin-left: 20px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    color: #f3ff4d;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    background-color: #225079;
+}
+
+/*********************************** Item Page ***********************************/
+span.star-prototype, span.star-prototype > * {
+    height: 16px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
+
+
+.vl {
+    border-left: 1px solid rgb(179, 179, 179);
+    height: 100%;
+    position: absolute;
+    margin-left: -20px;
+}
+
+/********************************** Post Item Page **********************************/
+#myImg {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+/********************************** Lender's Page **********************************/
+.lender-list {
+    padding: 0 40px 10px 40px;
+    margin-top: -20px;
+}
+.lender-list .item-box {
+    margin: 30px 0;
+    padding: 20px 40px 20px 40px;
+    background-color: #fff;
+    border-radius: 1rem;
+    color: #000;
+    text-decoration: none;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .1));
+}
+.lender-list .item-box:hover {
+    background-color: rgb(255, 255, 228);
+    color: #444;
+}
+.lender-list .item-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, .3));
+}
+.lender-list .item-box .paracrop {
+    margin: 20px 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    height: 4.5em;
+}
+.lender-list .item-box .posteddate {
+    color: #777;
+    text-align: center;
+    font-size: 14px;
+}
+.lender-list .item-box .item-price {
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-bottom: 10px;
+    width: 80%;
+    height: 120px;
+    border: 1px solid #d8d8d8;
+    border-radius: 18px;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+}
+.lender-list .item-box .item-price .item-price-content {
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.mainthumb {
+    color: #000;
+    text-decoration: none;
+}
+.mainthumb:hover {
+    color: #777;
+    text-decoration: none;
+}
+.mainthumbimg {
+    height: 200px;
+    max-width:100%;
+    object-fit: cover;
+}
+.mainthumbcard:hover {
+    transform: scale(1.05);
+}
+.mainthumbcard .card-body {
+    padding: 25px 40px;
+    text-align: center;
+}
+.overlay {
+    background-color: rgba(0, 63, 145, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    line-height:240%;
+}
+.overlay .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    color: rgb(255, 255, 255);
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 4px #333;
+}
+.overlay-bottom {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 157, 255, 0.7), rgba(0, 0, 0, 0));
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    line-height:240%;
+}
+.overlay-bottom .text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding: 1px;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.crop {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}​
+.link {
+    color: #000;
+    text-decoration: none;
+}
+.link:hover {
+    background-color: #333;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+/*********************************** Error Message ***********************************/
+.errorMsg {
+    margin: 5px;
+    color: #ff0000;
+    font-size: 12px;
+}
+/*************************  Media Queries Breakpoints *************************/
+/* Small devices -sm  */
+@media (min-width: 576px){
+}
+
+/* Medium devices - md */
+@media (min-width :768px){
+
+}
+
+/* Large devices - lg */
+@media (min-width: 992px){
+
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) { 
+	.user{
+	     	margin-left: -260px;
+    		margin-top: -60px;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) { 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) { 
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+/************   User defined breakpoints *****************/
+@media (min-width: 576px) and (max-width: 618px){
+	.user{
+	    margin-top: 50px;
+	    margin-left: -100px;
+    }
+    #navbar-logo {
+        margin-top: 30px;
+    }
+    #navbarSupportedContent {
+        margin-left: 30px;
+    }
+}
+@media(max-width: 450px){
+	.user {
+        margin-left: -130px
+    }
+    #navbar-logo {
+        margin-top: 30px;
+    }
+    #navbarSupportedContent {
+        margin-left: 30px;
+    }
+}
+
+/************ Rating Stars *****************/
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+}
+
+.rating-stars ul > li.star > i.fa {
+  font-size:2em;
+  color:#ccc;
+}
+
+.rating-stars ul > li.star.hover > i.fa {
+  cursor: pointer;
+  color:#FFCC36;
+}
+
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FF912C;
+}
+
+/************ Item Listing Page *****************/
+
+div#sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 50%
+}

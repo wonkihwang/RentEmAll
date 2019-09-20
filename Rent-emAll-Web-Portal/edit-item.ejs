@@ -1,0 +1,164 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto card my-5 shadow-lg rounded">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Edit Product</h2><br>
+                <form id="itemform" name="itemform" enctype="multipart/form-data" method="POST" action="/editItem">
+                    <div class="form-group row">
+
+                        <div class="col-md-7">
+                            <!-- second column -->
+                            <div class="form-group row">
+                                <input type="hidden" id="itemId" name="itemId" value="<%= item.itemId %>">
+                                <!-- zero row -->
+                                <div class="col-sm-3">
+                                    <label for="name">Category</label>
+                                </div>
+
+                                <div class="col-sm-9">
+                                    <select id="categoryselect" name="category" class="form-control mr-sm-2" style="background-color: rgb(223, 244, 255);">
+                                        <% var options = [ "Please select one...", "Homeware", "Tools & Equip", "Sports & Rec", "Entertainment", "Babies & Kids", "Fashion" ];
+                                            for ( var i = 1; i < options.length; i++ )
+                                            { var selected = ( item.categoryId == i ) ? "selected" : "";
+                                            %>
+                                        <option value="<%= i %>" <%=selected %>>
+                                            <%=options[i] %>
+                                        </option>
+                                        <% } %>
+                                    </select>
+                                    <div class="errorMsg" id="categoryError"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <!-- first row -->
+                                <div class="col-sm-3">
+                                    <label for="name">Product Title</label>
+                                </div>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="name" name="name" maxlength="100" value="<%= item.name %>">
+                                    <div class="errorMsg" id="nameError"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <!-- second row -->
+                                <div class="col-sm-3">
+                                    <label for="description">Product Description</label>
+                                </div>
+
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="description" name="description" rows="7"
+                                        maxlength="255" ]><%= item.description %></textarea>
+                                    <div class="errorMsg" id="descError"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="purchasedYear">Year Purchased</label><br />
+                                        <input type="text" class="date-own form-control" id="purchasedYear" name="purchasedYear"
+                                            value="<%= item.purchasedYear %>">
+                                        <div class="errorMsg" id="purchasedYearError"></div>
+                                    </div> <!-- form-group row -->
+                                </div> <!-- col-sm-6 -->
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="purchasedPrice">Purchased Price $ </label><br />
+                                        <input type="number" class="form-control num-only" id="purchasedPrice" name="purchasedPrice"
+                                            min="1" value="<%= item.purchasedPrice %>">
+                                        <div class="errorMsg" id="purchasedPriceError"></div>
+                                    </div> <!-- form-group row -->
+                                </div> <!-- col-sm-6 -->
+                            </div> <!-- row -->
+
+                            <div class="row">
+                                <!-- third row -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="depositPrice">Deposite Price $ </label><br />
+                                        <input type="number" class="form-control num-only" id="depositPrice" name="depositPrice"
+                                            min="1" value="<%= item.deposit %>">
+                                        <div class="errorMsg" id="depositError"></div>
+                                    </div> <!-- form-group row -->
+                                </div> <!-- col-sm-6 -->
+                                <br>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="rentPerDay">Rental Price $ <small>(per day)</small></label><br />
+                                        <input type="number" class="form-control num-only" id="rentPerDay" name="rentPerDay"
+                                            min="1" value="<%= item.rental_price_daily %>">
+                                        <div class="errorMsg" id="rentError"></div>
+                                    </div> <!-- form-group row -->
+                                </div> <!-- col-sm-6 -->
+                            </div> <!-- row -->
+
+                            <!-- forth row -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="itemStartDate">Rental From <small>(start date)</small></label><br />
+                                        <input type="date" class="form-control" id="itemStartDate" name="itemStartDate"
+                                            value="" required>
+                                        <input type="hidden" id="getItemStartDate" value="<%= item.itemStartDate %>"
+                                            required>
+                                        <div class="errorMsg" id="itemStartDateError"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
+                                        <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate"
+                                            value="" required>
+                                        <input type="hidden" id="getItemFinishDate" value="<%= item.itemFinishDate %>"
+                                            required>
+                                        <div class="errorMsg" id="itemFinishDateError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div> <!-- end of col-sm-7 -->
+
+
+
+                        <div class="col-md-1">
+                            <!---------------- empty column ---------------->
+                        </div>
+
+                        <div class="col-md-4">
+                            <!-- first column -->
+                            <img id="myImg" class="mx-auto" src="../asset/img/image-not-found.png" alt="Upload image"
+                                width="100%" height="200" />
+                            <br><br>
+                            <label for="photoURL" class="btn btn-secondary btn-block">Upload item's image</label>
+                            <input type="file" id="photoURL" name="photoURL" accept="image/*" style="display: none">
+                            <div style="margin: 5px;color: #ff0000;font-size: 12px;">To edit this post, you need to
+                                upload a new or the same photo </div>
+                        </div> <!-- col-md-4 -->
+
+                    </div> <!-- col-sm-8 -->
+                    <div class="text-center">
+                        <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel"
+                            onclick="window.history.back();">
+                        <input form="itemform" class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Update&emsp;&emsp;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    document.getElementById("purchasedYear").setAttribute("max", yyyy);
+
+    var startdate = new Date($('#getItemStartDate').val());
+    var finishdate = new Date($('#getItemFinishDate').val());
+    var startdateString = startdate.getFullYear() + '-' + ("0" + (startdate.getMonth() + 1)).slice(-2) + '-' + ("0" + startdate.getDate()).slice(-2);
+    var finishdateString = finishdate.getFullYear() + '-' + ("0" + (finishdate.getMonth() + 1)).slice(-2) + '-' + ("0" + finishdate.getDate()).slice(-2);
+    $('#itemStartDate').val(startdateString);
+    $('#itemFinishDate').val(finishdateString);
+</script>

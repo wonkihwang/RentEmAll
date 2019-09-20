@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto card my-5 shadow-lg rounded">
+      <div class="card-body">
+        <!-- first row - Page title -->
+        <h2 class="card-title text-center mb-4">Post Product</h2><br>
+        <form id="itemform" name="itemform" enctype="multipart/form-data" method="POST" action="/postItem">
+          <div class="form-group row">
+
+            <!-- second row - category, Title, description and Image -->
+            <div class="col-md-7 col-md-offset-1">
+              <!-- second row - first column - first row -->
+              <div class="form-group row">
+
+                <div class="col-sm-3">
+                  <label for="name">Category</label>
+                </div>
+
+                <div class="col-sm-9">
+                  <select id="categoryselect" name="category" class="form-control mr-sm-2" style="background-color: rgb(223, 244, 255);">
+                    <option value="">Please select one...</option>
+                    <option value="1">Homeware</option>
+                    <option value="2">Tools &amp; Equip</option>
+                    <option value="3">Sports &amp; Rec</option>
+                    <option value="4">Entertainment</option>
+                    <option value="5">Babies &amp; Kids</option>
+                    <option value="6">Fashion</option>
+                  </select>
+                  <div class="errorMsg" id="categoryError"></div>
+                </div>
+              </div>
+
+              <!-- second row - first column - second row -->
+              <div class="form-group row">
+
+                <div class="col-sm-3">
+                  <label for="name">Product Title</label>
+                </div>
+
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name" name="name" maxlength="100">
+                  <div class="errorMsg" id="nameError"></div>
+                </div>
+              </div>
+
+              <!-- second row - first column - third row -->
+              <div class="form-group row">
+
+                <div class="col-sm-3">
+                  <label for="description">Product Description</label>
+                </div>
+
+                <div class="col-sm-9">
+                  <textarea class="form-control" id="description" name="description" rows="7" maxlength="255"></textarea>
+                  <div class="errorMsg" id="descError"></div>
+                </div>
+              </div>
+            </div><!-- end of md-7 + col-md-offset-1 -->
+
+            <div class="col-md-1">
+              <!-- empty column -->
+            </div>
+
+            <!-- second row - second column -->
+            <div class="col-md-4">
+
+              <img id="myImg" class="mx-auto" src="asset/img/image-not-found.png" alt="Upload image" width="100%"
+                height="200" />
+              <br><br>
+              <label for="photoURL" class="btn btn-secondary btn-block">Upload item image</label>
+              <input type="file" id="photoURL" name="photoURL" accept="image/*" style="display: none">
+              <div class="errorMsg" id="imgError"></div>
+            </div> <!-- col-md-4 -->
+          </div><!-- row -->
+
+          <br><br>
+
+          <!-- third row - first column -->
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="purchasedYear">Year Purchased</label><br />
+                  <input type="text" class="date-own form-control" id="purchasedYear" name="purchasedYear" max="2018">
+                  <div class="errorMsg" id="purchasedYearError"></div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="purchasedPrice">Purchased Price $ </label><br />
+                  <input type="number" max="2500" class="form-control num-only" id="purchasedPrice" name="purchasedPrice">
+                  <div class="errorMsg" id="purchasedPriceError"></div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <!-- third row -->
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="depositPrice">Deposite Price $ </label><br />
+                  <input type="number" max="2500" class="form-control num-only" id="depositPrice" name="depositPrice">
+                  <div class="errorMsg" id="depositError"></div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="rentPerDay">Rental Price $ <small>(Daily)</small></label><br />
+                  <input type="number" max="2500" class="form-control num-only" id="rentPerDay" name="rentPerDay">
+                  <div class="errorMsg" id="rentError"></div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <!-- forth row -->
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="itemStartDate">Rental From <small>(start date)</small></label><br />
+                  <input type="date" class="form-control" id="itemStartDate" name="itemStartDate">
+                  <div class="errorMsg" id="itemStartDateError"></div>
+                </div>
+              </div>
+              <div class="col-sm-4 col-sm-offset-2">
+                <div class="form-group">
+                  <label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
+                  <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate">
+                  <div class="errorMsg" id="itemFinishDateError"></div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+          </div> <!-- form-group -->
+
+          <div class="text-center">
+            <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel" onclick="window.history.back();">
+            <input class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Post&emsp;&emsp;">
+          </div>
+        </form>
+      </div> <!-- card-body -->
+    </div>
+  </div> <!-- row -->
+</div> <!-- container -->
+<script>
+  var today = new Date();
+  var yyyy = today.getFullYear();
+  document.getElementById("purchasedYear").setAttribute("max", yyyy);
+</script>
+

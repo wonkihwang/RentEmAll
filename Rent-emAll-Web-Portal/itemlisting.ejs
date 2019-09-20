@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="row">
+    <div id="sticky" class="card my-5 col-md-3">
+      <div class="card-body">
+        <h6 class="pt-3">Category:</h6>
+         <form method="get">
+           <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="home" name="home" value="1" <% if (query.home) { %> checked <% } %>/>
+            <label class="form-check-label" for="home">Home</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="tools" name="tools" value="2" <% if (query.tools) { %> checked <% } %>/>
+            <label class="form-check-label" for="tools">Tools and Equipment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="sports" name="sports" value="3" <% if (query.sports) { %> checked <% } %>/>
+            <label class="form-check-label" for="sports">Sports and Recreations</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="4" <% if (query.entertainment) { %> checked <% } %>/>
+            <label class="form-check-label" for="entertainment">Entertainment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="babies" name="babies" value="5" <% if (query.babies) { %> checked <% } %>/>
+            <label class="form-check-label" for="babies">Babies and Kids</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="6" <% if (query.fashion) { %> checked <% } %>/>
+            <label class="form-check-label" for="fashion">Fashion</label>
+          </div>
+          <br><br>
+            <div class="form-group">
+              <label for="deposit">
+                <h6>Max. Deposit Price:</h6>
+              </label>
+              <div class="d-flex justify-content-center">
+                <span class="mr-2">$0</span>
+                <input class="custom-range" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value=<% if (query.deposit) { %>"<%= query.deposit %>" <% } else { %> "500" <% } %> oninput="displayDeposit(this.value)" />
+                <span class="ml-2">$1000</span>
+              </div>
+              <div class="text-center mr-4">
+                  <span id="depositVal"><% if (query.deposit) { %><%= query.deposit %><% } else { %> 500 <% } %></span>
+                  <input type="hidden">
+              </div>
+            </div>
+        <br>
+          <div class="form-group">
+            <label for="rate">
+              <h6>Max. Daily Rate:</h6>
+            </label>
+            <div class="d-flex justify-content-center">
+              <span class="mr-2">$0</span>
+              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="200" step="1" value=<% if (query.rate) { %>"<%= query.rate %>" <% } else { %> "100" <% } %> oninput="displayDailyRate(this.value)" />
+              <span class="ml-2">$200</span>
+            </div>
+            <div class="text-center mr-4">
+                <span id="dailyRateVal"><% if (query.rate) { %><%= query.rate %><% } else { %> 100 <% } %></span>
+                <input type="hidden">
+            </div>
+          </div><br><br>
+          <input type="hidden" name="searchbar" value="<%= query.searchbar %>">
+          <input type="hidden" name="sortby" value="<%= query.sortby %>">
+          <button type="submit" formaction="/list/<%= page %>" class="btn btn-primary float-right">Apply Filter</button>
+         </form>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="card my-5">
+        <div class="card-body">
+          <span class="font-italic float-left"><%= items.length %> of <%= noOfItems %> results</span>
+          <div class="float-right">
+            <form action="/list/<%= page %>" class="form-inline">
+              <% if (query.home) { %><input type="hidden" name="home" value="<%= query.home %>"><% } %>
+              <% if (query.tools) { %><input type="hidden" name="tools" value="<%= query.tools %>"><% } %>
+              <% if (query.sports) { %><input type="hidden" name="sports" value="<%= query.sports %>"><% } %>
+              <% if (query.entertainment) { %><input type="hidden" name="entertainment" value="<%= query.entertainment %>"><% } %>
+              <% if (query.babies) { %><input type="hidden" name="babies" value="<%= query.babies %>"><% } %>
+              <% if (query.fashion) { %><input type="hidden" name="fashion" value="<%= query.fashion %>"><% } %>
+              <% if (query.deposit) { %><input type="hidden" name="deposit" value="<%= query.deposit %>"><% } %>
+              <% if (query.rate) { %><input type="hidden" name="rate" value="<%= query.rate %>"><% } %>
+              <span class="mr-2 mb-2">Sort by:</span>
+              <select class="form-control btn btn-md btn-info mb-2" id="sortby" name="sortby" onchange="this.form.submit()">
+                <option value="postedDate" <% if (query.sortby == "postedDate") { %> selected <% } %>>Posted Date</option>
+                <option value="price" <% if (query.sortby == "price") { %> selected <% } %>>Price</option>
+                <option value="availability" <% if (query.sortby == "availability") { %> selected <% } %>>Availability</option>
+              </select>
+              <input type="hidden" name="searchbar" value="<%= query.searchbar %>">
+            </form>
+          </div>
+          <div class="table-responsive">
+            <table id="itemTable" class="table table-condensed table-hover">
+              <tbody>
+                <% for (var i = 0; i < items.length; i++) { %>
+                  <tr onclick="window.location.assign('/item/<%= items[i].itemId %>')" style="cursor: pointer;">
+                    <td>
+                        <img style="width: 150px; height: auto;" src="<%= items[i].photoURL %>">
+                    </td>
+                    <td>
+                      <h3 id="itemName"><%= items[i].name %><% if (items[i].availability == 0) { %><div class="text-danger">(Unavailable)</div><% } %></h3>
+                      <p id="itemDescription">
+                        <%= items[i].description %>
+                      </p>
+                      <span id="postedDate">Posted on <%= postedDates[i] %></span>
+                    </td>
+                    <td>
+                      <div class="border rounded pb-4 px-1" style="background: #EFF0F0">
+                        <div style="width: 160px"><span class="text-danger font-weight-bold" id="price" style="font-size: 25pt;">$<%= items[i].rental_price_daily %></span> / day
+                        </div>
+                        <a href="/lenderpage/<%= userNames[i] %>"><span class="font-weight-bold" id="username">Lender: <%= userNames[i] %></span></a><br>
+                        <div id="rating" class="mt-2">
+                            <span class="star-prototype"><%= rates[i] %></span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+            <hr>
+            <ul class="pagination pagination-sm justify-content-center mt-5">
+                <li class="page-item <% if (totalPages == 1 || currentPage == 1) { %>disabled<% } %>">
+                    <a class="page-link" href="/list/<%= currentPage - 1 %><%= queries %>">Previous</a>
+                </li>
+                <% for (var i = 0; i < totalPages; i++) { %>
+                <li class="page-item <% if (currentPage == (i + 1)) { %>active<% } %>">
+                    <a class="page-link" href="/list/<%= i + 1 %><%= queries %>"><%= i + 1 %></a>
+                </li>
+                <% } %>
+                <li class="page-item <% if (currentPage == totalPages || totalPages < 2) { %>disabled<% } %>">
+                    <a class="page-link" href="/list/<%= currentPage + 1 %><%= queries %>"><Next>Next</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

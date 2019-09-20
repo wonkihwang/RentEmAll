@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="shadow-lg rounded">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">My Profile</h3><br>
+                        <form id="userprofile" action="/profile" method="POST" onsubmit="return profileValidation();">
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class=col-md-2><label for="username">USERNAME</label></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="username" name="username" class="form-control" maxlength="20"
+                                            value="<%= sess.username %>" readonly>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="password">PASSWORD</label></div>
+                                    <div class="col-md-4">
+                                        <input type="button" class="btn btn-primary" id="ChangePasswordBtn" value="Change Password">
+                                        <input type="password" id="password" name="password" maxlength="20" class="form-control retype">
+                                        <div class="errorMsg" id="password_errors"></div>
+                                    </div>
+                                    <div class="col-md-2 retype"><label for="retypePW">CONFIRM PASSWORD</label></div>
+                                    <div class="col-md-4 retype">
+                                        <input type="password" id="retypePW" name="retypePW" maxlength="20" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="firstname">FIRSTNAME</label></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="firstname" name="firstname" maxlength="30" class="form-control"
+                                            value="<%= sess.firstname %>" readonly>
+                                    </div>
+                                    <div class=col-md-2><label for="postalcode">POSTAL CODE</label></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="postalcode" name="postalcode" maxlength="6" class="form-control"
+                                            value="<%= sess.postalcode %>">
+                                        <div class="errorMsg" id="postal_errors"></div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="lastname">LASTNAME</label></div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="lastname" name="lastname" maxlength="30" class="form-control"
+                                            value="<%= sess.lastname %>" readonly>
+                                    </div>
+                                    <div class="col-md-2"><label for="phoneNum">PHONE#</label></div>
+                                    <div class="col-md-4">
+                                        <input type="tel" id="phoneNum" name="phoneNum" maxlength="10" class="form-control"
+                                            value="<%= sess.phone %>">
+                                        <div class="errorMsg" id="phone_errors"></div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="province">PROVINCE</label></div>
+                                    <div class="col-md-4">
+                                        <input type="province" id="province" name="province" class="form-control" value="<%= sess.prov %>"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-label-group">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="email">EMAIL</label></div>
+                                    <div class="col-md-6">
+                                        <input type="email" id="email" name="email" class="form-control" value="<%= sess.email %>" readonly>
+                                        <div class="errorMsg" id="email_errors"></div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="text-center">
+                                <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel"
+                                    onclick="window.history.back();">
+                                <button class="btn btn-lg btn-primary text-uppercase" type="submit">&emsp;&emsp;Save&emsp;&emsp;</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

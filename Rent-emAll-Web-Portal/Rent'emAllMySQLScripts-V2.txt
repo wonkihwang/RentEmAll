@@ -1,0 +1,189 @@
+DROP TABLE ItemTbl;
+DROP TABLE OrderLineTbl;
+DROP TABLE OrderTbl;
+DROP TABLE InvoiceTbl;
+DROP TABLE PaymentTbl;
+DROP TABLE UserListingTbl;
+DROP TABLE ReviewTbl;
+DROP TABLE PaymentTbl;
+DROP TABLE eChannelTbl;
+DROP TABLE ItemCategoryTbl;
+
+CREATE TABLE ItemTbl(
+  itemId             SMALLINT    	UNSIGNED NOT NULL,
+  categoryId         SMALLINT    	UNSIGNED NOT NULL,
+  name               VARCHAR(255) 	NOT NULL,
+  description        VARCHAR(255)	NOT NULL,
+  brand		         VARCHAR(255) 	NOT NULL,
+  madeYear           YEAR        	DEFAULT NULL,      
+  color              VARCHAR(15)  	NOT NULL,    
+  weight             DECIMAL(4,2)	NOT NULL DEFAULT 4.99, 
+  purchasedYear      YEAR        	DEFAULT NULL,      
+  purchasedPrice     DECIMAL(4,2) 	NOT NULL DEFAULT 4.99,  
+  postalCode	     VARCHAR(6)  	NOT NULL,
+  province           VARCHAR(2)  	NOT NULL,
+  photoURL	         VARCHAR(255) 	NOT NULL,
+  creationDate       TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (itemId)
+);
+
+CREATE TABLE ItemCategoryTbl(
+  categoryId         SMALLINT    	UNSIGNED NOT NULL,
+  name               VARCHAR(255) 	NOT NULL,
+
+  PRIMARY KEY (categoryId)
+);
+
+CREATE TABLE OrderLineTbl(
+  orderLineId            SMALLINT       UNSIGNED NOT NULL,
+  orderId            	 SMALLINT    	UNSIGNED NOT NULL,
+  itemId            	 SMALLINT    	UNSIGNED NOT NULL,
+  rentalStartDate        DATE           NOT NULL, 
+  rentalEndDate          DATE           NOT NULL, 
+  rentPerDay		     DECIMAL(4,2)   NOT NULL,
+  depositPrice	         DECIMAL(4,2)   NOT NULL, 
+  quantity		         INT	        NOT NULL DEFAULT 1, 
+ 
+  PRIMARY KEY (orderId)
+); 
+
+CREATE TABLE OrderTbl(
+  orderId               SMALLINT        UNSIGNED NOT NULL,
+  userId                INTEGER         NOT NULL,
+  creationDate          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  total		            DECIMAL(4,2)    NOT NULL,
+
+  PRIMARY KEY (orderId)
+); 
+
+CREATE TABLE UserTbl (
+    userId           INTEGER            NOT NULL,
+    firstName        VARCHAR(30)        NOT NULL,
+    lastName         VARCHAR(30)        NOT NULL,
+    userName         VARCHAR(20)        UNIQUE NOT NULL,
+    password         VARCHAR(20)        NOT NULL,
+    emailAddress     VARCHAR(100)       NOT NULL,
+    phoneNumber      VARCHAR(20)        NOT NULL,
+    postalCode	     VARCHAR(6)         NOT NULL,
+    province         VARCHAR(2)         NOT NULL,
+    registrationDate TIMESTAMP 		    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (userId)
+);
+
+CREATE TABLE UserListingTbl (
+    userListingId      INTEGER            NOT NULL,
+    userId           INTEGER            NOT NULL,
+    ItemId           INTEGER            NOT NULL,
+    
+    PRIMARY KEY (userId)
+);
+
+CREATE TABLE ReviewTbl(
+  reviewId          SMALLINT      UNSIGNED NOT NULL,
+  userId		    SMALLINT      UNSIGNED NOT NULL, -- for peraon who leaves the review
+  userListingId     INTEGER       NOT NULL,
+  itemId           SMALLINT      UNSIGNED NOT NULL, -- userUd and item Id is retrievable
+  type		        SMALLINT      NOT NULL,  
+  creationDate      DATE          NOT NULL,
+  reviewText        VARCHAR(200)  NOT NULL,
+  rating			DECIMAL(3,2)  NOT NULL,
+  
+  PRIMARY KEY (reviewId)
+);
+
+
+CREATE TABLE InvoiceTbl(
+  invoiceId           SMALLINT      UNSIGNED NOT NULL, 
+  orderId             SMALLINT      UNSIGNED NOT NULL, -- userUd and item Id is retrievable
+  creationDate        DATE          NOT NULL,
+  invoiceBalance      DECIMAL(4,2)  NOT NULL DEFAULT 4.99, 
+  tax                 DECIMAL(4,2)  NOT NULL,
+  
+  PRIMARY KEY (invoiceId)
+);
+
+
+CREATE TABLE PaymentTbl(
+  paymentId      SMALLINT      UNSIGNED NOT NULL,
+  invoiceId		 SMALLINT      UNSIGNED NOT NULL, 
+  paymentDate    DATE          NOT NULL,
+  paymentAmount  DECIMAL(4,2)  NOT NULL DEFAULT 0, 
+  status	     SMALLINT      NOT NULL,
+  prevBalance    DECIMAL(4,2)  NOT NULL DEFAULT 0, 
+  
+  PRIMARY KEY (paymentId)
+);
+
+CREATE TABLE eChannelTbl(
+  messageId      SMALLINT      UNSIGNED NOT NULL,
+  userId         SMALLINT      UNSIGNED NOT NULL, 
+  itemId         SMALLINT      UNSIGNED NOT NULL, 
+  receiverUserId SMALLINT      UNSIGNED NOT NULL, 
+  creationDate   DATE          NOT NULL,
+  messageText    SMALLINT      NOT NULL,
+  
+  PRIMARY KEY (messageId)
+);
+
+-- Altering tables to add Foregin Keys to teh tables
+
+-- ItemTbl FK
+ALTER TABLE ItemTbl
+ADD CONSTRAINT FK_ItemItemCategoryTbl
+FOREIGN KEY (categoryId) REFERENCES ItemCategoryTbl(categoryId);
+
+
+-- OrderTbl FK 
+ALTER TABLE OrderTbl
+ADD CONSTRAINT FK_OrderOrderLineTbl
+FOREIGN KEY (userId) REFERENCES OrderLineTbl(userId);
+
+
+-- OrderLineTbl FKs
+ALTER TABLE OrderLineTbl
+ADD CONSTRAINT FK_OrderLineOrderTbl
+FOREIGN KEY (orderId) REFERENCES OrderTbl(orderId);
+
+ALTER TABLE OrderLineTbl
+ADD CONSTRAINT FK_OrderLineItemTbl
+FOREIGN KEY (itemId) REFERENCES ItemTbl(itemId);
+  
+  
+-- InvoiceTbl FK
+ALTER TABLE InvoiceTbl
+ADD CONSTRAINT FK_InvoiceOrderTbl
+FOREIGN KEY (orderId) REFERENCES OrderTbl(orderId);
+
+
+-- PaymentTbl FK
+ALTER TABLE PaymentTbl
+ADD CONSTRAINT FK_InvoiceOrderTbl
+FOREIGN KEY (invoiceId) REFERENCES InvoiceTbl(invoiceId);
+
+
+-- UserListingTbl FKs
+ALTER TABLE UserListingTbl
+ADD CONSTRAINT FK_UserListingUserTbl
+FOREIGN KEY (userId) REFERENCES UserTbl(userId);
+
+ALTER TABLE UserListingTbl
+ADD CONSTRAINT FK_UserListingItemTbl
+FOREIGN KEY (ItemId) REFERENCES ItemTbl(ItemId);
+ 
+ 
+-- ReviewTbl FKs
+ALTER TABLE ReviewTbl
+ADD CONSTRAINT FK_ReviewUserTbl
+FOREIGN KEY (userId) REFERENCES UserTbl(userId);
+
+ALTER TABLE ReviewTbl
+ADD CONSTRAINT FK_ReviewItemTbl
+FOREIGN KEY (itemId) REFERENCES ItemTbl(itemId);
+
+ 
+-- eChannelTbl
+ALTER TABLE eChannelTbl
+ADD CONSTRAINT FK_eChannelUserIdTbl
+FOREIGN KEY (userId) REFERENCES UserTbl(userId);

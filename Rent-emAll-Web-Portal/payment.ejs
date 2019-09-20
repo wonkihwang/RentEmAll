@@ -1,0 +1,102 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 card shadow-lg rounded my-5 mx-auto">
+            <div class="card-body">
+                <h3>Payment</h3>
+                <br />
+                <div class="table-responsive">
+                    <table class="paymentTable" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th style="width:50%;">Rental Item Name</th>
+                                <th style="width:10%;">Deposit</th>
+                                <th style="width:15%;">Price Per Day</th>
+                                <th style="width:15%;">Rental Period</th>
+                                <th style="width:10%;text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% if (cart) { %>
+                            <% cart.forEach(function(item) { %>
+                            <tr>
+                                <td>
+                                    <%= item.name %>
+                                </td>
+                                <td>$
+                                    <%= item.deposit %>
+                                </td>
+                                <td>$
+                                    <%= item.rentalprice %>
+                                </td>
+                                <td>
+                                    <%= item.rentaldays %> day(s)</td>
+                                <td style="text-align:right;">
+                                    $ <span class="totals_payment"><%= item.total %></span>
+                                </td>
+                            </tr>
+                            <% }); } %>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <br /><br />
+
+                <h3>Payment Method</h3>
+                <hr>
+                <form action="/pay" method="POST">
+                    <div class="row ml-3">
+                        <div class="form-check">
+                            <i class="fab fa-paypal fa-3x mr-4 text-primary"></i>
+                            <input class="form-check-input mt-4" type="radio" id="paymentMethod" name="paymentMethod">
+                            <label class="form-check-label mr-2" for="paymentMethod" id="paymentMethodLabel">PAYPAL</label>
+                            <span style="font-size:10px;color:red;">Please select a payment method.</span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="col-4">
+                            <h3 class="text-primary float-right">Subtotal: $ <span id="subtotal_payment"></span></h3>
+                            <input type="hidden" name="subtotal" id="subtotal" value="0">
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-warning btn-block align-self-start" onclick="window.history.back();"><i
+                                    class="fa fa-angle-left"></i> Back to Shopping Cart</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" id="btn-purchase" class="btn btn-primary text-uppercase btn-block"
+                                disabled>Purchase</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var sum = 0;
+    var numOfItems = $('#paymentTable tbody tr').length;
+    $('.totals_payment').each(function () {
+        console.log($(this).text());
+        sum += parseFloat($(this).text());
+    });
+    $('#numOfItems').text(numOfItems);
+    $('#subtotal_payment').text(sum);
+    $('#subtotal').val(sum);
+
+    $('#paymentMethod').prop('checked', false);
+    $('#btn-purchase').attr('disabled', 'disabled');
+    $('#btn-purchase').removeClass('btn-primary');
+    $('#btn-purchase').addClass('btn-secondary');
+
+    $('#paymentMethod').change(function () {
+        if (this.checked) {
+            $('#btn-purchase').attr('disabled', false);
+            $('#btn-purchase').removeClass('btn-secondary');
+            $('#btn-purchase').addClass('btn-primary');
+        }
+    });
+</script>

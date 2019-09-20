@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-8 card shadow-lg rounded my-5 mx-auto">
+        <div class="card-body">
+          <h3 class="card-title">Forgot Username</h3>
+          <p>Please enter your registered email address</p><br>
+          <form method="POST" action="/forgotuser">
+            <div class="form-row">
+              <label class="col-2" for="email">EMAIL</label>
+              <input type="email" id="email" name="email" class="col-7 form-control">
+              <button class="col btn btn-md btn-primary text-uppercase ml-3" type="submit">Submit</button>
+            </div>
+          </form>
+
+          <hr class="my-5">
+          
+          <h3 class="card-title">Forgot Password</h3>
+          <p>Please enter your registered username and email address</p><br>
+          <form method="POST" action="/forgotpass">
+            <div class="form-row">
+              <label class="col-2" for="username">USERNAME</label>
+              <input type="text" id="username" name="username" class="col-7 form-control">
+            </div>
+            <div class="form-row mt-3">
+              <label class="col-2" for="email">EMAIL</label>
+              <input type="email" id="email" name="email" class="col-7 form-control">
+              <button class="col btn btn-md btn-primary text-uppercase ml-3" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,230 @@
+<style>
+  #terms {
+      cursor: pointer;
+      color: #00b3ff;
+    }
+  
+    #terms:hover {
+      text-decoration: underline;
+    }
+  </style>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto card my-5 shadow-lg rounded">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Registration</h2>
+        <form id="registerform" method="POST" action="/signup" onsubmit="return formValidation();">
+          <div class="form-group mb-3 w-50">
+            <label for="username">USERNAME</label>
+            <input type="text" id="username" name="username" maxlength="20" class="form-control" autofocus>
+            <div class="errorMsg" id="username_errors"></div>
+          </div>
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="password">PASSWORD</label>
+              <input type="password" id="password" name="password" maxlength="20" class="form-control">
+              <div class="errorMsg" id="password_errors"></div>
+            </div>
+            <div class="col">
+              <label for="retypePW">CONFIRM PASSWORD</label>
+              <input type="password" id="retypePW" name="retypePW" maxlength="20" class="form-control">
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="firstname">FIRSTNAME</label>
+              <input type="text" id="firstname" name="firstname" maxlength="30" class="form-control">
+              <div class="errorMsg" id="name_errors"></div>
+            </div>
+            <div class="col">
+              <label for="lastname">LASTNAME</label>
+              <input type="text" id="lastname" name="lastname" maxlength="30" class="form-control">
+            </div>
+          </div>
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="email">EMAIL</label>
+              <input type="text" id="email" name="email" class="form-control" value="<%= email %>" readonly>
+              <div class="errorMsg" id="email_errors"></div>
+            </div>
+            <div class="col">
+              <label for="phoneNum">PHONE#</label>
+              <input type="tel" id="phoneNum" name="phoneNum" maxlength="10" class="form-control">
+              <div class="errorMsg" id="phone_errors"></div>
+            </div>
+          </div>
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="postalcode">POSTAL CODE</label>
+              <input type="text" id="postalcode" name="postalcode" maxlength="6" class="form-control">
+              <div class="errorMsg" id="postal_errors"></div>
+            </div>
+            <div class="col">
+              <div class="mt-4 ml-4">
+                <span>
+                  <input type="checkbox" id="termsCheck" name="termsCheck">
+                </span>
+                <span class="ml-2">Agree to <span id="terms" data-toggle="modal" data-target="#termsModal">Terms
+                    and Conditions</span></span>
+                <div class="errorMsg" id="terms_errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-lg btn-primary text-uppercase px-5 mb-3" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalTitle">Rent'emAll: Terms and Conditions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="font-weight-bold">1. DEFINITIONS</p>
+        <p>1.1 In these Conditions, the following definitions apply:</p>
+        <p><span class="font-weight-bold">“Business Day</span> means a day (other than a Saturday, Sunday or a public
+          holiday) when banks in Scotland are open
+          for business;</p>
+        <p><span class="font-weight-bold">“Conditions</span> means the terms and conditions set out in this document;</p>
+        <p><span class="font-weight-bold">“Contract</span> means the contract between <b>Rent’emAll</b> and the
+          Customer for the rental of Rental item;</p>
+        <p><span class="font-weight-bold">“Customer</span> means the person, firm or company who borrow the Rental item
+          from <b>Rent’emAll</b>;</p>
+        <p><span class="font-weight-bold">“Rental item</span> means any apparatus, material or rental item (including
+          all accessories supplied either as part
+          of a kit or as standard with the main unit) as set out in the Order;</p>
+        <p><span class="font-weight-bold">“<b>Rent’emAll</b></span> means <b>Rent’emAll</b> Web Rental Portal;</p>
+        <p><span class="font-weight-bold">“Order</span> means the Customer’s order for any listed item and rental item,
+          as set out in the Customer’s rental
+          order form or the Customer’s written acceptance of <b>Rent’emAll</b>’s quotation, as the case may be;</p>
+        <p><span class="font-weight-bold">“Rental Payment(s)</span> means the payment(s) made by or on behalf of the
+          Customer for the rent of the Rental item
+          and as set out in the Order;</p>
+        <p><span class="font-weight-bold">“Rental Period</span> means the period of rent set out in clause 3; and</p>
+        <p><span class="font-weight-bold">“Risk Period</span> has the meaning set out in clause 5.3.</p>
+
+        <p class="font-weight-bold">2. ACCEPTANCE</p>
+        <p>2.1 The Conditions apply to the Contract to the exclusion of any other terms that the Customer seeks to
+          impose
+          or incorporate, or which are implied by trade, custom, practice or course of dealing.</p>
+        <p>2.2 The Order constitutes an offer by the Customer to rent the Rental item in accordance with these
+          Conditions.
+          The Customer is responsible for ensuring that the terms of the Order are complete and accurate.</p>
+        <p>2.3 The Order shall only be deemed to be accepted when <b>Rent’emAll</b> issues a written acceptance of the
+          Order, at
+          which point the Contract shall come into existence.</p>
+        <p>2.4 The Contract constitutes the entire agreement between the parties. The Customer acknowledges that it has
+          not relied on any statement, promise, representation, assurance or warranty made or given by or on behalf of
+          <b>Rent’emAll</b> which is not set out in the Contract.</p>
+        <p>2.5 Any samples, drawings, descriptive matter, or advertising produced by <b>Rent’emAll</b> and any
+          descriptions or
+          illustrations contained in <b>Rent’emAll</b>'s catalogues or brochures are produced for the sole purpose of
+          giving an
+          approximate idea of the Rental item described in them. They shall not form part of the Contract or have any
+          contractual force.</p>
+        <p>2.6 Fitness for use is for the Customer to determine, no performance objective is expressed or implied by
+          <b>Rent’emAll</b>. The Rental item may appear to offer comparable or similar specifications to other
+          manufacturers’
+          products but will not necessarily perform identically to such other manufacturers’ products.</p>
+        <p>2.7 A quotation for the Rental item given by <b>Rent’emAll</b> shall not constitute an offer. A quotation
+          shall only
+          be valid for a period of thirty (30) days from its date of issue and shall be subject to availability of the
+          Rental item.</p>
+
+        <p class="font-weight-bold">3. RENTAL PERIOD</p>
+        <p>3.1 The Rental Period shall be as set out in the Order, unless the Contract is terminated earlier in
+          accordance
+          with these Conditions.</p>
+        <p>3.2 The Rental Period may be extended by mutual written agreement of both parties and the daily rate set out
+          in
+          the Order shall apply to any extended Rental Period.</p>
+        <p>3.3 If the Rental Period has not been extended in accordance with clause 3.2 and the Rental item is not
+          returned to <b>Rent’emAll</b> on the return date set out in the Order, the Customer will be charged at the
+          daily rate
+          set out in the Order until the Rental item has been returned to <b>Rent’emAll</b>.</p>
+
+        <p class="font-weight-bold">Terms & Conditions of Rental of Rental item</p>
+        <p class="font-weight-bold">4. DELIVERY</p>
+        <p>4.1 <b>Rent’emAll</b> shall deliver the Rental item to the location set out in the Order or such other
+          location as the
+          parties may agree at any time after <b>Rent’emAll</b> notifies the Customer that the Rental item is ready for
+          delivery.</p>
+        <p>4.2 Delivery dates quoted by <b>Rent’emAll</b> are approximate only, and the time of delivery is not of the
+          essence.
+          It is expressly agreed that <b>Rent’emAll</b> shall not be liable to the Customer for any delay in delivery
+          or of the
+          condition of the Rental item or otherwise.</p>
+
+
+        <p class="font-weight-bold">5. TITLE</p>
+        <p>5.1 The Rental item shall at all times remain the property of <b>Rent’emAll</b>, and the Customer shall have
+          no right,
+          title or interest in or to the Rental item (save the right to possession and use of the Rental item subject
+          to
+          these Conditions).</p>
+        <p>5.2 The Customer shall give <b>Rent’emAll</b> immediate notice in the event the Rental item is lost, stolen
+          or damaged
+          as a result of the Customer’s possession or use of the Rental item or if there is a claim or, for any reason,
+          a
+          threat of seizure of the Rental item.</p>
+        <p>5.3 The risk of loss, theft, damage or destruction of the Rental item shall pass to the Customer on delivery
+          of
+          the Rental item to the Customer, or where applicable, the Customer’s appointed agent. The Rental item shall
+          remain at the sole risk of the Customer during the Rental Period and any further term during which the Rental
+          item is in the possession, custody or control of the Customer (<span class="font-weight-bold">“Risk Period</span>)
+          until such time as the Rental
+          item is returned to <b>Rent’emAll</b>.</p>
+
+        <p class="font-weight-bold">6. TRAINING</p>
+        <p>6.1 The Customer represents and acknowledges that he has requisite knowledge and experience to operate the
+          Rental item.</p>
+        <p>6.2 <b>Rent’emAll</b> representatives may be called upon to provide start up operator training for the
+          Customer, if
+          necessary and requested by the Customer. For the avoidance of doubt, the cost of start-up operator training
+          is
+          not included in the Order and will be quoted separately upon request.</p>
+
+        <p class="font-weight-bold">7. LIABILITY AND RENTAL ITEM BREAKDOWN</p>
+        <p>7.1 In the event that the Rental item experiences a breakdown due to any defect in materials or workmanship,
+          <b>Rent’emAll</b>’s liability shall be limited to the cost of repair, including parts and labour, to return
+          the Rental
+          item to full working order.</p>
+        <p>7.2 <b>Rent’emAll</b> may, at its sole discretion, extend the Rental Period at no cost to the Customer for
+          the time
+          required to replace or repair the Rental item. <b>Rent’emAll</b> shall not be obligated to bear the costs of
+          Customer’s labour or standby time in connection to any breakdown, nor any costs related to the delay of
+          Customer projects.</p>
+        <p>7.3 Without prejudice to clause 7.4, <b>Rent’emAll</b>’s maximum aggregate liability for breach of the
+          Contract
+          (including any liability for the acts or omissions of its employees, agents and subcontractors), whether
+          arising in contract, delict (including negligence), misrepresentation or otherwise, shall in no circumstances
+          exceed the cost of fulfilling its obligation under clause 7.1.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="termsAgree" class="btn btn-primary" data-dismiss="modal">Agree</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#termsAgree').click(function () {
+    if ($('#termsCheck').prop("checked") == false) {
+      $('#termsCheck').prop('checked', true);
+    }
+  })
+</script>

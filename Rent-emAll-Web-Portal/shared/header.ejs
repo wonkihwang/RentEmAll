@@ -1,0 +1,71 @@
+<div class="container-fluid" id="header">
+    <div class="row">
+        <div class="col-sm-11">
+            <div class="img-fluid"><a href="/"><img id="navbar-logo" src="../asset/img/logo.png"></a></div>
+            <div class="row float-right">
+                <ul id="header-inline">
+                    <% if(!sess.username) { %>
+                    <li class="d-inline"><a href="/login">Login</a></li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline"><a href="/register">Register</a></li>
+                    <% } else { %>
+                    <li class="d-inline"><a href="/logout">Logout</a></li>
+                    <% } %>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline"><a href="/aboutus">About us</a></li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline"><a href="/faq">FAQ</a></li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline"><a href="/contactus">Contact us</a></li>
+                </ul>
+            </div>
+            <br />
+
+            <div class="row" id="searchbar-row">
+                <div class="col-md-6">
+                    <form method="get" class="form-inline">
+                        <!-- <select name="category" class="form-control col-sm-10 col-md-3 mr-md-2 mr-2 my-2">
+                            <option value="0">Category</option>
+                            <option value="1">Homeware</option>
+                            <option value="2">Tools &amp; Equip</option>
+                            <option value="3">Sports &amp; Rec</option>
+                            <option value="4">Entertainment</option>
+                            <option value="5">Babies &amp; Kids</option>
+                            <option value="6">Fashion</option>
+                        </select> -->
+
+                        <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-10 mt-2" type="search"
+                            placeholder="What to borrow?" aria-label="Search" style="border-top-right-radius:0;border-bottom-right-radius:0;">
+                        <button type="submit" formaction="/list/1" id="btn-list" class="btn btn-primary col-xs-4 col-sm-2 col-md-2 mt-2"
+                            style="border-top-left-radius:0;border-bottom-left-radius:0;"><i class="fas fa-search"></i></button>
+                        <!-- <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-2 col-md-2 my-2"
+                            value="Map"> -->
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <% if(sess.username) { %>
+                    <div id="features">
+                        <a href="/post"><input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post"></a>
+                        <a href="/profile"><input type="button" id="btn-mypage" class="btn btn-danger my-2 mr-sm-2"
+                                value="Profile"></a>
+                        <a href="/lenderpage"><input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page"></a>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="user">
+                <% if(!sess.username) { %>
+                <i class="fas fa-user fa-3x"></i>
+                <p id="user-id">guest</p>
+                <% } else { %>
+                <a href="/cart"><i class="fas fa-cart-arrow-down fa-3x"></i></a>
+                <p id="user-id">
+                    <%= sess.username %>
+                </p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

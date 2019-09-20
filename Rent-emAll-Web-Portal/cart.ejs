@@ -1,0 +1,163 @@
+<style>
+	.table>tbody>tr>td,
+	.table>tfoot>tr>td {
+		vertical-align: middle;
+	}
+
+	@media screen and (max-width: 600px) {
+		table#cart tbody td .form-control {
+			width: 20%;
+			display: inline !important;
+		}
+
+		.actions .btn {
+			width: 36%;
+			margin: 1.5em 0;
+		}
+
+		.actions .btn-info {
+			float: left;
+		}
+
+		.actions .btn-danger {
+			float: right;
+		}
+
+		table#cart thead {
+			display: none;
+		}
+
+		table#cart tbody td {
+			display: block;
+			padding: .6rem;
+			min-width: 320px;
+		}
+
+		table#cart tbody tr td:first-child {
+			background: #333;
+			color: #fff;
+		}
+
+		table#cart tbody td:before {
+			content: attr(data-th);
+			font-weight: bold;
+			display: inline-block;
+			width: 8rem;
+		}
+
+		table#cart tfoot td {
+			display: block;
+		}
+
+		table#cart tfoot td .btn {
+			display: block;
+		}
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 mx-auto">
+			<div class="shadow-lg rounded">
+				<div class="card my-5">
+					<div class="card-body">
+						<h3 class="card-title">Shopping Cart</h3>
+						<br>
+						<table id="cartTable" class="table table-hover table-condensed">
+							<thead>
+								<tr>
+									<th style="width:50%">Product</th>
+									<th style="width:10%">Deposit</th>
+									<th style="width:10%">Per Day</th>
+									<th style="width:10%">Duration</th>
+									<!-- <th style="width:7%" class="text-center">Quantity</th> -->
+									<th style="width:10%">Total</th>
+									<th style="width:3%"></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<% if (cart && cart.length > 0) { %>
+								<% cart.forEach(function(item) { %>
+								<tr onclick="window.location.assign('/item/<%= item.id %>')" style="cursor:pointer;">
+										<td data-th="Product">
+											<div class="row">
+												<div class="col-sm-3">
+													<img src="<%= item.image %>" class="img-responsive" style="width:100px;height:100px;object-fit:cover;" />
+												</div>
+												<div class="col-sm-9">
+													<h4 class="nomargin">
+														<%= item.name %>
+													</h4>
+													<p>Lender:
+														<%= item.lender %>
+													</p>
+												</div>
+											</div>
+										</td>
+										<td data-th="Deposit">$
+											<%= item.deposit %>
+										</td>
+
+										<td data-th="Per Day">$
+											<%= item.rentalprice %>
+										</td>
+
+										<td data-th="Duration">
+											<%= item.rentaldays %> day(s)</td>
+
+										<td data-th="Subtotal" class="text-center">$
+											<span class="totals">
+												<%= item.total %></span>
+										</td>
+
+										<td class="actions" data-th="">
+											<!-- <button class="btn btn-info btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i></button> -->
+											<a href="remove/<%= item.id %>"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></a>
+										</td>
+								</tr>
+								<% }); } %>
+
+							</tbody>
+							<tfoot>
+								<!-- <tr class="visible-xs">
+						  <td class="text-center"><strong>Total 1.99</strong></td>
+					  </tr> -->
+								<tr>
+									<td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+									<% if (!cart || !cart[0]) { %>
+									<td colspan="4" class="hidden-xs text-center"><strong>No item has been added.</strong></td>
+									<% } else { %>
+									<td colspan="4" class="hidden-xs text-center"><strong>Subtotal (<span id="numOfItems"></span> item(s)): $
+											<span id="totalAmount"></span></strong></td>
+									<% } %>
+									<td><a href="/payment" style="text-decoration:none;">
+											<button id="payment_button" class="btn btn-block">Proceed to Checkout <i class="fa fa-angle-right"></i></button>
+										</a></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('#payment_button').attr("disabled", "disabled");
+	$('#payment_button').removeClass('btn-primary');
+
+	var sum = 0;
+	var numOfItems = $('#cartTable tbody tr').length;
+	$('.totals').each(function () {
+		console.log($(this).text());
+		sum += parseFloat($(this).text());
+	});
+	$('#numOfItems').text(numOfItems);
+	$('#totalAmount').text(sum);
+
+	if (numOfItems > 0) {
+		$('#payment_button').attr("disabled", false);
+		$('#payment_button').addClass('btn-primary');
+	}
+</script>

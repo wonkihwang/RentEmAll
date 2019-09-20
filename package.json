@@ -1,0 +1,38 @@
+{
+  "name": "rentemall",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salisafi/Rent-emAll-Web-Portal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salisafi/Rent-emAll-Web-Portal/issues"
+  },
+  "homepage": "https://github.com/salisafi/Rent-emAll-Web-Portal#readme",
+  "dependencies": {
+    "connect": "^3.6.6",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.6.1",
+    "ejs-locals": "^1.0.2",
+    "express": "^4.16.4",
+    "express-ejs-layouts": "^2.5.0",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.15.6",
+    "express-socket.io-session": "^1.3.5",
+    "moment": "^2.22.2",
+    "multer": "^1.4.1",
+    "mysql": "^2.16.0",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.18.5",
+    "paypal-rest-sdk": "^1.8.1",
+    "socket.io": "^2.1.1",
+    "socket.io-connect": "^0.2.2"
+  }
+}

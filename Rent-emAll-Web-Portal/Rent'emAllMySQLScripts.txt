@@ -1,0 +1,168 @@
+
+
+
+CREATE TABLE UserTbl (
+    userId           INTEGER            NOT NULL,
+    firstName        VARCHAR(30)        NOT NULL,
+    lastName         VARCHAR(30)        NOT NULL,
+    userName         VARCHAR(20)        UNIQUE NOT NULL,
+    password         VARCHAR(20)        NOT NULL,
+    roles	     VARCHAR(20)        NOT NULL DEFAULT "borrower",
+    emailAddress     VARCHAR(100)       NOT NULL,
+    phoneNumber      INTEGER            NOT NULL,
+    postalCode	     VARCHAR(6)         NOT NULL,
+    province         VARCHAR(2)         NOT NULL,
+    registrationDate TIMESTAMP 		NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (userId)
+)
+
+
+CREATE TABLE ItemTbl(
+  itemId             SMALLINT    	UNSIGNED NOT NULL,
+  categoryId         SMALLINT    	UNSIGNED NOT NULL,
+  userId	     SMALLINT    	UNSIGNED NOT NULL,
+  name               VARCHAR(255) 	NOT NULL,
+  description        VARCHAR(255)	NOT NULL,
+  brand		     VARCHAR(255) 	NOT NULL,
+  madeYear           YEAR        	DEFAULT NULL,      
+  color              VARCHAR(15)  	NOT NULL,    
+  weight             DECIMAL(4,2)	NOT NULL DEFAULT 4.99, 
+  purchasedYear      YEAR        	DEFAULT NULL,      
+  purchasedPrice     DECIMAL(4,2) 	NOT NULL DEFAULT 4.99,  
+  postalCode	     VARCHAR(6)  	NOT NULL,
+  province           VARCHAR(2)  	NOT NULL,
+  photoURL	     VARCHAR(255) 	NOT NULL,
+  creationDate       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (itemId),
+  FOREIGN KEY (categoryId) REFERENCES CategoryTbl(categoryId),
+  FOREIGN KEY (userId) REFERENCES UserTbl(userId)
+);
+
+
+CREATE TABLE CategoryTbl(
+  categoryId             SMALLINT    	UNSIGNED NOT NULL,
+  name               VARCHAR(255) 	NOT NULL,
+
+  PRIMARY KEY (categoryId)
+);
+ 
+CREATE TABLE OrderLineTbl(
+  orderLineId            SMALLINT       UNSIGNED NOT NULL,
+  orderId            	 SMALLINT    	UNSIGNED NOT NULL,
+  itemId            	 SMALLINT    	UNSIGNED NOT NULL,
+  rentalStartDate        DATE           NOT NULL, 
+  rentalEndDate          DATE           NOT NULL, 
+  rentPerDay		 DECIMAL(4,2)   NOT NULL,
+  depositPrice	         DECIMAL(4,2)   NOT NULL, 
+  quantity		 INT	        NOT NULL DEFAULT 1, 
+ 
+  PRIMARY KEY (orderId),
+  FOREIGN KEY (orderId) REFERENCES OrderTbl(orderId),
+  FOREIGN KEY (itemId) REFERENCES ItemTbl(itemId)
+); 
+
+CREATE TABLE OrderTbl(
+  orderId               SMALLINT        UNSIGNED NOT NULL,
+  creationDate          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  total		        DECIMAL(4,2)    NOT NULL,
+
+  PRIMARY KEY (orderId)
+); 
+
+CREATE TABLE PaymentTbl(
+  paymentId             SMALLINT      UNSIGNED NOT NULL,
+  invoiceId		SMALLINT      UNSIGNED NOT NULL,
+  userId		SMALLINT      UNSIGNED NOT NULL, 
+  creationDate          DATE          NOT NULL,
+  amount                DECIMAL(4,2)  NOT NULL DEFAULT 4.99, 
+  status	        SMALLINT      NOT NULL,
+  
+  PRIMARY KEY (paymentId),
+  FOREIGN KEY (invoiceId) REFERENCES InvoiceTbl(invoiceId)
+);
+
+CREATE TABLE ReviewTbl(
+  reviewId              SMALLINT      UNSIGNED NOT NULL,
+  type		        SMALLINT      NOT NULL,  
+  invoiceId		SMALLINT      UNSIGNED NOT NULL,
+  userId		SMALLINT      UNSIGNED NOT NULL, 
+  creationDate          DATE          NOT NULL,
+  amount                DECIMAL(4,2)  NOT NULL DEFAULT 4.99, 
+  
+  PRIMARY KEY (reviewId),
+  FOREIGN KEY (invoiceId) REFERENCES InvoiceTbl(invoiceId)
+);
+
+INSERT INTO UserTbl
+VALUES(
+('1', "Sali", "Safi", "SSAFI", "SSSSSSS", "lender", "ssasi@myseneca.ca", 
+"(416)466-6666", "L3T2E9", "ON", "2018-03-22" 
+);
+
+INSERT INTO UserTbl
+VALUES(
+'2', "Minuk", "Minuk", "Minuk", "MMMMM", "borrower", "minuk@myseneca.ca", 
+"(416)765-7656", "K6Y5F9", "ON", "2016-02-09" 
+);
+
+INSERT INTO UserTbl
+VALUES(
+'3', "Wonkie", "Wonkie", "Wonkie", "WWWW", "borrower", "wonki@myseneca.ca", 
+"(416)765-7656", "K6Y5F9", "ON", "2016-02-09" 
+);
+
+
+INSERT INTO ItemTbl
+VALUES(
+'1', '2', "3", "Sony Bluetooth Headphones", "Sony MDR-XB650BT Extra Bass Wireless Bluetooth Headphones", "Sony", "2017", 
+"Red", "110 gr", "2018", "120", "K6T5R4", "ON", "https://img.grouponcdn.com/deal/3JaYunFxA1cQX8oZ5bTKev4geZby/3J-1000x600/v1/c700x420.jpg", "2018-03-24" 
+);
+
+INSERT INTO ItemTbl
+VALUES(
+'2', '1', "2", "MX 686G SPORTS", "Durable Ear bud headset designed for those with an active lifestyle.", "MX 686G SPORTS", "2016", 
+"Green", "30 gr", "2017", "50", "M8J0R4", "ON", "https://assets.sennheiser.com/img/5102/product_detail_x1_desktop_MX_686G-sq-01-sennheiser.jpg", "2018-05-17" 
+);
+
+INSERT INTO ItemTbl
+VALUES(
+'3', '3', "3", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless Headset, Phones/TV (Red)", "Sony", "2017", 
+"Red", "110 gr", "2018", "120", "K6T5R4", "ON", "https://images-na.ssl-images-amazon.com/images/G/15/apparel/rcxgs/tile._CB211469167_.gif", "2018-05-03" 
+);
+
+
+INSERT INTO ItemTbl
+VALUES(
+'3', '3', "3", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless Headset, Phones/TV (Red)", "Sony", "2017", 
+"Red", "110 gr", "2018", "120", "K6T5R4", "ON", "https://images-na.ssl-images-amazon.com/images/G/15/apparel/rcxgs/tile._CB211469167_.gif", "2018-05-03" 
+);
+
+INSERT INTO ItemTbl
+VALUES(
+'3', '3', "3", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless", "Bluetooth Headphones Over Ear, Hi-Fi Stereo Wireless Headset, Phones/TV (Red)", "Sony", "2017", 
+"Red", "110 gr", "2018", "120", "K6T5R4", "ON", "https://images-na.ssl-images-amazon.com/images/G/15/apparel/rcxgs/tile._CB211469167_.gif", "2018-05-03" 
+);
+
+INSERT INTO CategoryTbl
+VALUES(
+'1', "Electronics"
+);
+
+INSERT INTO CategoryTbl
+VALUES(
+'2', "Books"
+);
+
+INSERT INTO CategoryTbl
+VALUES(
+'3', "Electronics"
+);
+
+
+DROP TABLE UserTbl;
+
+DROP TABLE ItemTbl;
+
+DROP TABLE CategoryTbl;
